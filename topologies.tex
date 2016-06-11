@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage{tikz}
+\usepackage{subcaption}
+\usetikzlibrary{calc}
+\begin{document}
+\tikzset{
+    arc/.style = {line width=1pt, draw=blue!50!cyan!25!black},
+    vertex/.style = {circle,draw,fill=blue!50!black}
+}
+
+\begin{figure}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \begin{tikzpicture}[auto,node distance=1cm,thick]
+          \foreach \name/\angle/\text in {1/0/1, 2/60/2, 3/120/3, 4/180/4, 5/240/5, 6/300/6}
+            \node[vertex] (\name) at (\angle:1cm) {};
+
+          \foreach \from/\to in {1/2,2/3,3/4,4/5,5/6,6/1}
+            { \draw (\from) -- (\to);}
+        \end{tikzpicture}
+        \caption{Ring}
+        \label{fig:topology-ring}
+    \end{subfigure}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \begin{tikzpicture}[auto,node distance=1cm,thick]
+            \foreach \name/\angle/\text in {2/90/2, 3/162/3, 4/234/4, 5/306/5, 6/18/6}
+                \node[vertex] (\name) at (\angle:1cm) {};
+
+            \node[vertex] [below of=2] (1) {};
+
+            \foreach \from/\to in {1/2,1/3,1/4,1/5,1/6}
+                { \draw (\from) -- (\to);}
+        \end{tikzpicture}
+        \caption{Star}
+        \label{fig:topology-star}
+    \end{subfigure}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \begin{tikzpicture}[auto,node distance=1cm,thick]
+          \foreach \name/\angle/\text in {1/0/1, 2/60/2, 3/120/3, 4/180/4, 5/240/5, 6/300/6}
+            \node[vertex] (\name) at (\angle:1cm) {};
+
+          \foreach \from/\to in {1/2,1/3,1/4,1/5,1/6,2/3,2/4,2/5,2/6,3/4,3/5,3/6,4/5,4/6,5/6}
+            { \draw (\from) -- (\to);}
+        \end{tikzpicture}
+        \caption{Fully Connected}
+        \label{fig:topology-full}
+    \end{subfigure}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \begin{tikzpicture}[auto,node distance=1cm,thick]
+            \node[vertex] (1) {};
+            \node[vertex] [right of=1](2) {};
+            \node[vertex] [below of=1](3) {};
+            \node[vertex] [below right of=2](4) {};
+            \node[vertex] [below of=4](5) {};
+            \node[vertex] [right of=4](6) {};
+
+            \foreach \from/\to in {1/2,1/3,2/4,1/5,3/5,4/5,5/6}
+                { \draw (\from) -- (\to);}
+        \end{tikzpicture}
+        \caption{Mesh}
+        \label{fig:topology-mesh}
+    \end{subfigure}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \begin{tikzpicture}[auto,node distance=1cm,thick]
+            \node[vertex] (1) {};
+            \foreach \previous/\name in {1/2, 2/3, 3/4}
+                \node[vertex] [right of=\previous](\name) {};
+
+            \foreach \previous/\name in {1/2, 2/3, 3/4}
+                { \draw (\previous) -- (\name);}
+        \end{tikzpicture}
+        \caption{Line}
+        \label{fig:topology-line}
+    \end{subfigure}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \path [arc]
+                (0,0) -- (2.5,0);
+            \foreach \x/\y in {0/-0.5, 1/-0.5, 2/-0.5, 0.5/0.5, 1.5/0.5, 2.5/0.5}
+                \path [arc] (\x,0) -- (\x,\y) node [vertex] {};
+        \end{tikzpicture}
+        \caption{Bus}
+        \label{fig:topology-bus}
+    \end{subfigure}
+    \begin{subfigure}{\textwidth}
+        \centering
+        \begin{tikzpicture}[auto,node distance=1cm,thick]
+            \node[vertex] (1) {};
+            \node[vertex] [below left of=1](2) {};
+            \node[vertex] [below right of=1](3) {};
+            \node[vertex] [below right of=2](4) {};
+            \node[vertex] [below left of=2](5) {};
+            \node[vertex] [below right of=3](6) {};
+
+            \foreach \from/\to in {1/2,1/3,2/4,2/5,3/6}
+                { \draw (\from) -- (\to);}
+        \end{tikzpicture}
+        \caption{Tree}
+        \label{fig:topology-tree}
+    \end{subfigure}
+\end{figure}
+\end{document}
